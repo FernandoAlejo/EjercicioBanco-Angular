@@ -1,0 +1,10 @@
+<div class="modal" *ngIf="isOpen">
+    <div class="modal-content">
+      <h2>Confirmar eliminación</h2>
+      <p>¿Está seguro que desea eliminar el producto "{{ productToDelete?.name }}"?</p>
+      <div class="modal-actions">
+        <button (click)="onCancel()">Cancelar</button>
+        <button (click)="onDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>

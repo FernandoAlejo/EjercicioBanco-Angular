@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="search-container">
+    <input [(ngModel)]="searchTerm" (ngModelChange)="onSearch($event)" placeholder="Search">
+    <button class="button-add" routerLink="add">Add</button>
+  </div>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Logo</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Fecha de Liberación</th>
+        <th>Fecha de Revisión</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of (products$ | async | search:searchTerm) | slice:0:itemsPerPage">
+        <td><img [src]="product.logo" width="50" height="50" alt="{{ product.name }}"></td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.date_release }}</td>
+        <td>{{ product.date_revision }}</td>
+        <td><select (change)="onActionSelect($event, product)">
+          <option [value]="">:</option>
+          <option value="edit">Edit</option>
+          <option value="delete">Delete</option>
+        </select></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="registres">
+    <h3>{{totalProducts}} Registros</h3>
+  </div>
+  <div class="pagination-container">
+    <select [(ngModel)]="itemsPerPage" (ngModelChange)="onItemsPerPageChange($event)">
+      <option [value]="5">5</option>
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+    </select>
+  </div>
+</div>
+

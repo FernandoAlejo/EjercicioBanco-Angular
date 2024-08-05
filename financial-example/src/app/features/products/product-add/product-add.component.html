@@ -1,0 +1,72 @@
+<div class="container">
+
+  <div class="justify-content-center">
+    <div>
+      <h1>{{ isEditMode ? 'Editar Producto' : 'Agregar Producto' }}</h1>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="id">ID</label>
+          <input id="id" type="text" formControlName="id" [readonly]="isEditMode">
+          <div *ngIf="productForm.get('id')?.touched && productForm.get('id')?.errors">
+            <small class="error" *ngIf="productForm.get('id')?.errors?.['required']">ID es requerido</small>
+            <small class="error" *ngIf="productForm.get('id')?.errors?.['minlength']">ID debe tener al menos 3 caracteres</small>
+            <small class="error" *ngIf="productForm.get('id')?.errors?.['maxlength']">ID no puede tener más de 10 caracteres</small>
+            <small class="error" *ngIf="productForm.get('id')?.errors?.['idTaken'] ">Este ID ya existe</small>
+          </div>
+        </div>
+      
+        <div>
+          <label for="name">Nombre</label>
+          <input id="name" type="text" formControlName="name">
+          <div *ngIf="productForm.get('name')?.touched && productForm.get('name')?.errors">
+            <small class="error" *ngIf="productForm.get('name')?.errors?.['required']">Nombre es requerido</small>
+            <small class="error" *ngIf="productForm.get('name')?.errors?.['minlength']">Nombre debe tener al menos 5 caracteres</small>
+            <small class="error" *ngIf="productForm.get('name')?.errors?.['maxlength']">Nombre no puede tener más de 100 caracteres</small>
+          </div>
+        </div>
+      
+        <div>
+          <label for="description">Descripción</label>
+          <textarea id="description" formControlName="description"></textarea>
+          <div *ngIf="productForm.get('description')?.touched && productForm.get('description')?.errors">
+            <small class="error" *ngIf="productForm.get('description')?.errors?.['required']">Descripción es requerida</small>
+            <small class="error" *ngIf="productForm.get('description')?.errors?.['minlength']">Descripción debe tener al menos 10 caracteres</small>
+            <small class="error" *ngIf="productForm.get('description')?.errors?.['maxlength']">Descripción no puede tener más de 200 caracteres</small>
+          </div>
+        </div>
+      
+        <div>
+          <label for="logo">Logo URL</label>
+          <input id="logo" type="text" formControlName="logo">
+          <div *ngIf="productForm.get('logo')?.touched && productForm.get('logo')?.errors">
+            <small class="error" *ngIf="productForm.get('logo')?.errors?.['required']">Logo URL es requerida</small>
+            <small class="error" *ngIf="productForm.get('logo')?.errors?.['pattern']">Debe ser una URL válida</small>
+          </div>
+        </div>
+      
+        <div>
+          <label for="date_release">Fecha de Liberación</label>
+          <input id="date_release" type="date" formControlName="date_release">
+          <div *ngIf="productForm.get('date_release')?.touched && productForm.get('date_release')?.errors">
+            <small class="error" *ngIf="productForm.get('date_release')?.errors?.['required']">Fecha de liberación es requerida</small>
+            <small  class="error"*ngIf="productForm.get('date_release')?.errors?.['dateReleaseInvalid']">La fecha debe ser igual o mayor a la fecha actual</small>
+          </div>
+        </div>
+      
+        <div>
+          <label for="date_revision">Fecha de Revisión</label>
+          <input id="date_revision" type="date" formControlName="date_revision">
+          <div *ngIf="productForm.get('date_revision')?.touched && (productForm.get('date_revision')?.errors || productForm.errors?.['dateRevisionInvalid'])">
+            <small class="error" *ngIf="productForm.get('date_revision')?.errors?.['required']">Fecha de revisión es requerida</small>
+             <small class="error" *ngIf="productForm.errors?.['dateRevisionInvalid']">La fecha de revisión debe ser exactamente un año después de la fecha de liberación</small> 
+          </div>
+        </div>
+      
+        <button type="submit" [disabled]="productForm.invalid">{{ isEditMode ? 'Actualizar' : 'Agregar' }}</button>
+        <button type="button" (click)="onReset()">Reiniciar</button>
+        <button type="button" (click)="onQuit()">Salir</button>
+      </form>
+    </div>
+  </div>
+  
+</div>
